@@ -1,0 +1,155 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath} 
+\usepackage{amsfonts} 
+\usepackage{amssymb} 
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{tikz}
+\usepackage{txfonts}
+\usepackage[russian]{babel}
+
+\title{Тряп-10}
+\author{Волынцев Дмитрий 676 гр.}
+\date{1 декабря 2017}
+
+\begin{document}
+
+\maketitle
+
+\section
+\\
+1) Пусть $L_1 = a^ib^ic^j$ и $L_2 = a^ib^jc^j$ - КС-языки, замкнутые относительно объединения(можем добавить правило $S' \rightarrow S|T$) и конкатенации(можем добавить правило $S' \rightarrow ST$). Тогда $L_1 \cap L_2 = \{a^ib^ic^i\}$. Но по лемме о накачке он не является КС-языком, а значит КС-языки не замкнуты относительно пересечения.\\
+2) Так как $L_1/L_2$ это язык перечения $L_1$ и дополнения $L_2$, то по предыдущему пункту такой язык не является КС-языком, а значит КС-языки не замкнуты относительно дполнения.\\
+\section
+\\
+
+\section
+\\
+
+\section 
+\\
+Пусть $L = \{wtw^R$|$|w|=|t|\}$ - КС-язык. Тогда $L \cap A$ - КС-язык, где $A$ - регулярный, возьмем $A = a^+b^+a^+$. Тогда их пересечние - язык $a^ib^ja^i$ (i,j отличны от нуля). Применим отрицание леммы о накачке: пусть $w = a^pb^pa^p \in L \cap A$.\\
+$\forall w=xuyvz:|uyv|<p, |uv|>0 \exists i \geq 0: xu^iyv^iz = a^{p-k}b^{p-l}a^p$ либо $xu^iyv^iz = a^pb^{p-l}a^{p-k}$\\
+Ни одно из этих слов не принадлежит языку, значит такое пересчение языков не является КС-языком, значит $L$ - не КС-язык.\\
+\section 
+\\
+1) Язык $L_x = \{xy$|$|x|<|y|\}$, где $x$ содержит $b$, является КС-языком, так как для него существует МП-автомат:\\
+\begin{center}
+\begin{tikzpicture}[scale=0.2]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (37.7,-32.4) circle (3);
+\draw (37.7,-32.4) node {$q_1$};
+\draw [black] (52.8,-32.4) circle (3);
+\draw (52.8,-32.4) node {$q_2$};
+\draw [black] (29.3,-32.4) -- (34.7,-32.4);
+\fill [black] (34.7,-32.4) -- (33.9,-31.9) -- (33.9,-32.9);
+\draw [black] (36.377,-29.72) arc (234:-54:2.25);
+\draw (37.7,-25.15) node [above] {$\delta_1$};
+\fill [black] (39.02,-29.72) -- (39.9,-29.37) -- (39.09,-28.78);
+\draw [black] (39.023,-35.08) arc (54:-234:2.25);
+\draw (37.7,-39.65) node [below] {$\delta_2$};
+\fill [black] (36.38,-35.08) -- (35.5,-35.43) -- (36.31,-36.02);
+\draw [black] (40.7,-32.4) -- (49.8,-32.4);
+\fill [black] (49.8,-32.4) -- (49,-31.9) -- (49,-32.9);
+\draw (45.25,-32.9) node [below] {$\delta_5$};
+\draw [black] (51.477,-29.72) arc (234:-54:2.25);
+\draw (52.8,-25.15) node [above] {$\delta_3$};
+\fill [black] (54.12,-29.72) -- (55,-29.37) -- (54.19,-28.78);
+\draw [black] (54.123,-35.08) arc (54:-234:2.25);
+\draw (52.8,-39.65) node [below] {$\delta_4$};
+\fill [black] (51.48,-35.08) -- (50.6,-35.43) -- (51.41,-36.02);
+\end{tikzpicture}
+\end{center}
+\\
+$\delta_1 = \{a,Z_0/XZ_0\},\{b,Z_0/XZ_0\}$\\
+$\delta_2 = \{a,X/XX\}$\\
+$\delta_3 = \{a,X/\varepsilonup\},\{b,X/\varepsilonup\}$\\
+$\delta_4 = \{a,Z_0/Z_1\},\{b,Z_0/Z_1\},\{a,Z_1/Z_1\},\{b,Z_1/Z_1\},\{\varepsilonup,Z_1/\varepsilonup\}$\\
+$\delta_5 = \{b,X/XX\}$\\
+Если в слове встретилось $b$, стек обнуляется. Если дошли до $Z_0$, но слово не кончилось, значит оно принадлежит языку, стек опустошается и автомат завершает работу. Если $b$ встретилось во второй части, то слово не принимается.\\
+Язык $L_x$ не является регулярным по лемме о накачяке. Используем ее отрицание: пусть слово $w = a^kbb^{k+2}$, тогда найдется $i=k$: $xy^iz = a^{k+lm}b^{k+3}$ (при $l \geq 1$). Тогда если длина $x$ меньше длины $y$, то $x = a^n$ и в нем нет $b$, и слово не принадлежит языку.\\
+2) Язык $L_y = \{xy$|$|x|<|y|\}$, где $y$ содержит $a$, является регулярным языком, а значит и КС-языком, так как для него существует РВ $\Sigma^*a\Sigma^*$. Это верно, так как если слово содержит $a$, берем $y =$ слову, и в то же время для любого слова, не содержащего $a$, оно не будет входить в язык данного РВ.\\
+\section 
+\\
+Рассмотрим правило $S \rightarrow bAba$. $\exists \alpha = ba: S \rightarrow^*_l wA\alpha$. Для $A \rightarrow b$ и $S \rightarrow \varepsilonup$ FIRST($a\alpha$) $\cap$ FIRST($\varepsilonup\alpha$) = $b$ (для всех $\beta$, где $S \rightarrow^*_l wA\beta$). Таким образом это не $LL(1)$-грамматика по критерию.\\
+Продукции $S$:\\
+$FIRST(A) = \{a,\varepsilonup\}$
+$FIRST_2(aAaa) = aFIRST(Aaa) = \{aa,ab\}$
+$FIRST_2(bAba) = bFIRST(Aba) = \{bb\}$
+$FIRST_2(aAaa\alpha) = \{aa,ab\}$
+$FIRST_2(bAba\alpha) = \{bb\}$
+Пересечение $\{aa,ab\}$ и $\{bb\}$ - пустое множество.\\
+Продукции $A$:\\
+$\forall \alpha: S \rightarrow^*_l wA\alpha$ $\alpha \in \{aa,ba\} (\alpha[1,2])$\\
+$\forall \alpha: S \rightarrow^*_l wA\alpha$ $FIRST_2(b\alpha) = bFIRST(\alpha) = \{ba,bb\}$\\
+$\forall \alpha: S \rightarrow^*_l wA\alpha$ $FIRST_2(\varepsilonup\alpha) = FIRST(\alpha) = \{aa,ba\}$\\
+Пересечение $\{aa,ba\}$ и $\{ba,bb\}$ - пустое множество. Таким образом это $LL(2)$-грамматика.\\
+Тогда:\\
+$FIRST_2(A) = FIRST_2(b) \cup FIRST_2(\varepsilonup) = \{b,\varepsilonup\}$\\
+$FIRST_2(A) = FIRST_2(aAaa) \cup FIRST_2(bAba) = \{aa,ab,bb\}$\\
+$FOLLOW_2(A) = \{aa,ba\}$\\
+$FOLLOW_2(S) = \{\$\}$\\
+\\
+\section 
+\\
+$S \rightarrow ba|A$\\
+$A \rightarrow a|Aab|Ab$\\
+Избавимся от  левой рекурсии нетерминала $A$ согласно алгоритму. Получим грамматику:\\
+$S \rightarrow ba|A$\\
+$A \rightarrow aB$\\
+$B \rightarrow abB|bB|\varepsilonup$\\
+Таблица FIRST:\\
+\begin{table}[!h]
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+S & A & B\\
+\hline
+- & - & $\varepsilonup$\\
+\hline
+b & a & a,b,$\varepsilonup$\\
+\hline
+b,a & a & a,b,$\varepsilonup$\\
+\hline
+b,a & a & a,b,$\varepsilonup$\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+\\
+Таблица FOLLOW:\\
+\begin{table}[!h]
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+S & A & B\\
+\hline
+\$ & \$ & \$\\
+\hline
+\$ & \$ & \$\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+\\
+Сам $LL(1)$-анализатор:\\
+\begin{table}[!h]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+& a & b & \$\\
+\hline
+S & $S \rightarrow A$ & $S \rightarrow ba$ & -\\
+\hline
+A & $A \rightarrow aB$ & - & -\\
+\hline
+B & $B \rightarrow abB$ & $B \rightarrow bB$ & $B \rightarrow \varepsilonup$\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+\section 
+\\
+
+\end{document}

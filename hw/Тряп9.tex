@@ -1,0 +1,93 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath} 
+\usepackage{amsfonts} 
+\usepackage{amssymb} 
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{tikz}
+\usepackage{txfonts}
+\usepackage[russian]{babel}
+
+\title{Тряп-8}
+\author{Волынцев Дмитрий 676 гр.}
+\date{30 октября 2017}
+
+\begin{document}
+
+\maketitle
+
+\section
+\\
+
+\section
+\\
+$L = \{w$|$|w| \geq 2n$|$|w|_a \leq n\}$. Таким образом это язык всех таких слов, где количество символов $a \leq$ количества символов $b$. Тогда можем решить задачу аналогично задаче*** из прошлых дз про регулярность языка с равным количеством $a$ и $b$. Там мы доказали, что для каждой разницы в количестве символов будет свой класс эквивалентности. Таким образом их было бесконечно много и язык не был регулярным. Здесь ситуация такая же. Будем рассматривать слова из разного количества символов $a$. Например слова $a$ и $aa$ принадлежат разным классам эквивалентности, т.к. при добавлении различающего слова $b$ первое слово принадлежит языку, а второе нет. Для всех остальных количеств символов $a$ будем использовать соответствующее различающее слово из символов $b$, чтобы одно из слов в итоге принадлеажло языку, а другое нет. Таким образом, для каждого количества символов $a$ будет существовать свой класс эквивалентности, коих будет очевидно бесконечное число, а значит язык $L$ будет нерегулярным по теореме Майхилла-Нероуда. Классами эквивалентности при этом будут такие же классы, как и в случае задачи***, то есть различающиеся по разнице между количеством $a$ и $b$ (существует различающее слово, классы попарно различны).\\
+\section
+\\
+
+\section 
+\\
+Используем построенную нами в прошлом дз КС-грамматику для языка всех непалиндромов:\\
+$S \rightarrow aSa$|$bSb$|$aAb$|$bAa$\\
+$A \rightarrow aA$|$bA$|$\varepsilonup$\\
+Теперь построим по этой КС-грамматике МП-автомат в соответствии с алгоритмом. Он будет принимать слова по пустому стеку:\\
+\begin{center}
+\begin{tikzpicture}[scale=0.2]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (37.7,-32.4) circle (3);
+\draw (37.7,-32.4) node {$q$};
+\draw [black] (29.3,-32.4) -- (34.7,-32.4);
+\fill [black] (34.7,-32.4) -- (33.9,-31.9) -- (33.9,-32.9);
+\draw [black] (36.377,-29.72) arc (234:-54:2.25);
+\draw (37.7,-25.15) node [above] {$\delta_1$};
+\fill [black] (39.02,-29.72) -- (39.9,-29.37) -- (39.09,-28.78);
+\draw [black] (39.023,-35.08) arc (54:-234:2.25);
+\draw (37.7,-39.65) node [below] {$\delta_2$};
+\fill [black] (36.38,-35.08) -- (35.5,-35.43) -- (36.31,-36.02);
+\end{tikzpicture}
+\end{center}
+Первая функция перехода - для любого правила перехода $B \rightarrow \beta$: $(q, \varepsilonup, B) \rightarrow (q, \beta)$\\
+Вторая функция - для терминалов: $(q, a, a) \rightarrow (q, \varepsilonup)$\\
+$\delta_1 = \{\varepsilonup,S/aSa; \varepsilonup,S/bSb; \varepsilonup,S/aAb; \varepsilonup,S/bAa; \varepsilonup,A/aA; \varepsilonup,A/bA; \varepsilonup,A/\varepsilonup\}$\\
+$\delta_2 = \{a,a/\varepsilonup; b,b/\varepsilonup\}$
+\section 
+\\
+$L = \{a^ib^jc^k$|$i=j \vee i=k; i,j,k \geq 0\}$\\
+Для начала построим соответствующую КС-грамматику. Рассмотрим случай $i=j$. Для него:\\
+$S \rightarrow aTbC|\varepsilonup$\\
+$T \rightarrow aTb|\varepsilonup$\\
+$C \rightarrow cC|\varepsilonup$\\
+Второе правило обеспечивает одинаковое количество $a$ и $b$, третье - любое количество $c$.\\
+Теперь рассмотрим случай $i=k$. Для него:\\
+$S \rightarrow B|aRc|\varepsilonup$\\
+$B \rightarrow bB|\varepsilonup$\\
+$R \rightarrow B|aRc|\varepsilonup$\\
+Второе правило обеспечивает любое количество $b$, третье - одинаковое количество $a$ и $c$.\\
+Теперь объединим эти две грамматики в одну, таким образом получим грамматику для исходного языка:\\
+$S \rightarrow aTbC|B|aRc|\varepsilonup$\\
+$T \rightarrow aTb|\varepsilonup$\\
+$C \rightarrow cC|\varepsilonup$\\
+$B \rightarrow bB|\varepsilonup$\\
+$R \rightarrow B|aRc|\varepsilonup$\\
+Теперь построим по этой грамматике МП-автомат, принимающий по пустому стеку:\\
+\begin{center}
+\begin{tikzpicture}[scale=0.2]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (37.7,-32.4) circle (3);
+\draw (37.7,-32.4) node {$q$};
+\draw [black] (29.3,-32.4) -- (34.7,-32.4);
+\fill [black] (34.7,-32.4) -- (33.9,-31.9) -- (33.9,-32.9);
+\draw [black] (36.377,-29.72) arc (234:-54:2.25);
+\draw (37.7,-25.15) node [above] {$\delta_1$};
+\fill [black] (39.02,-29.72) -- (39.9,-29.37) -- (39.09,-28.78);
+\draw [black] (39.023,-35.08) arc (54:-234:2.25);
+\draw (37.7,-39.65) node [below] {$\delta_2$};
+\fill [black] (36.38,-35.08) -- (35.5,-35.43) -- (36.31,-36.02);
+\end{tikzpicture}
+\end{center}
+Первая функция перехода - для любого правила перехода $V \rightarrow \beta$: $(q, \varepsilonup, V) \rightarrow (q, \beta)$\\
+Вторая функция - для терминалов: $(q, a, a) \rightarrow (q, \varepsilonup)$\\
+$\delta_1 = \{\varepsilonup,S/aTbC; \varepsilonup,S/B; \varepsilonup,S/aRc; \varepsilonup,S/\varepsilonup; \varepsilonup,T/aTb; \varepsilonup,T/\varepsilonup; \varepsilonup,C/\varepsilonup; \varepsilonup,C/cC; \varepsilonup,B/\varepsilonup; \varepsilonup,B/bB;$ $\varepsilonup,R/\varepsilonup; \varepsilonup,R/B; \varepsilonup,R/aRc\}$\\
+$\delta_2 = \{a,a/\varepsilonup; b,b/\varepsilonup\}$
+\end{document}
